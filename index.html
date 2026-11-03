@@ -90,6 +90,8 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 .flush { padding-top: 0; }
 .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 1.5rem 3rem; flex-wrap: wrap; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
 .sec-head > div { display: grid; gap: 1rem; max-width: 46rem; }
+.sec-head > .one-line { max-width: none; }
+@media (min-width: 761px) { .one-line h2 { white-space: nowrap; } }
 .sec-head p:not(.label) { color: var(--muted); max-width: 38rem; }
 .more { text-decoration: none; color: var(--fg); font-weight: 600; display: inline-flex; gap: .5rem; border-bottom: 1px solid var(--accent); padding-bottom: .2rem; }
 .band { background: var(--panel); border-block: 1px solid var(--line); }
@@ -339,7 +341,7 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 
 <section class="band">
   <div class="wrap">
-    <div class="sec-head"><div><p class="label">Serviços</p><h2>Três frentes, um mesmo arquivo.</h2></div></div>
+    <div class="sec-head"><div class="one-line"><p class="label">Serviços</p><h2>Três frentes, um mesmo arquivo.</h2></div></div>
     <a class="svc" href="motion.html">
       <div class="m"><video src="portfolio/logo.mp4" poster="portfolio/logo.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Vinheta de logo animada"></video></div>
       <div class="t"><h3>Motion e vídeo</h3><p>Vinhetas de marca, vídeos de produto em 3D, animação 2D, edição de vídeo e making of de festas e eventos.</p>
