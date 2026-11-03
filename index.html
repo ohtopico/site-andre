@@ -182,6 +182,21 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 .steps strong { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; }
 .steps span { color: var(--muted); font-size: .97rem; }
 
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.trio .m { border-radius: 10px; overflow: hidden; aspect-ratio: 13 / 15; background: #fff; min-width: 0; }
+.trio .m > * { width: 100%; height: 100%; object-fit: cover; }
+.strip { border-radius: 10px; overflow: hidden; background: var(--panel); }
+.strip img { width: 100%; }
+.case-wide { padding-block: clamp(2rem, 4vw, 3rem); display: grid; gap: 1.5rem; }
+.case-wide + .case, .case + .case-wide, .case-wide + .case-wide { border-top: 1px solid var(--line); }
+.case-wide .t { display: grid; grid-template-columns: 5fr 7fr; gap: 1rem 3rem; align-items: end; }
+.case-wide .t > div { display: grid; gap: .9rem; }
+.case-wide .t p { color: var(--muted); }
+.case-wide dl { margin: 0; display: grid; gap: .55rem; }
+.case-wide dl div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; padding-top: .55rem; border-top: 1px solid var(--line); font-size: .93rem; }
+.case-wide dt { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); padding-top: .15rem; }
+.case-wide dd { margin: 0; }
+
 /* Contato */
 .contact { border-top: 1px solid var(--line); }
 .contact .wrap { display: grid; grid-template-columns: 7fr 5fr; gap: 3rem; align-items: end; }
@@ -208,13 +223,16 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
   .case.flip .m { order: 0; }
   .steps { grid-template-columns: repeat(2, 1fr); }
   .offers { grid-template-columns: 1fr; }
+  .case-wide .t { grid-template-columns: 1fr; }
 }
 @media (min-width: 601px) and (max-width: 960px) {
   .w-4.sq { grid-column: span 6; }
 }
 @media (max-width: 600px) {
   .pipe { grid-template-columns: 1fr 1fr; }
-  .shop, .duo, .steps { grid-template-columns: 1fr; }
+  .shop, .duo, .steps, .trio { grid-template-columns: 1fr; }
+  .trio .m { aspect-ratio: 4 / 5; }
+  .case-wide dl div { grid-template-columns: 1fr; gap: .1rem; }
   .site-head .wrap { padding-block: .75rem; row-gap: .5rem; }
   .site-nav { flex-wrap: nowrap; overflow-x: auto; width: 100%; gap: 1.1rem; scrollbar-width: none; padding-bottom: .1rem; }
   .site-nav::-webkit-scrollbar { display: none; }
@@ -254,7 +272,7 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 </div>
 
 <div class="tools">
-  <div class="wrap"><span>Ferramentas</span><span>Blender</span><span>Bambu Studio</span><span>Edição de vídeo</span><span>Impressão FDM · PLA e PETG</span><span>MakerWorld</span></div>
+  <div class="wrap"><span>Ferramentas</span><span>Blender</span><span>After Effects</span><span>Unity</span><span>Bambu Studio</span><span>Impressão FDM · PLA e PETG</span><span>MakerWorld</span></div>
 </div>
 
 <section id="trabalhos">
@@ -265,12 +283,14 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
     </div>
     <div class="works">
       <a class="work w-8" href="motion.html"><div class="m"><video src="portfolio/cidade.mp4" poster="portfolio/cidade.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Cena urbana noturna"></video></div><div class="cap"><strong>Cidade noturna</strong><span class="label">Cenário 3D · Animação</span></div></a>
-      <a class="work w-4 tall" href="modelagem.html"><div class="m"><video src="portfolio/radio.mp4" poster="portfolio/radio.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Rádio retrô em 3D"></video></div><div class="cap"><strong>Rádio retrô</strong><span class="label">Produto · Render</span></div></a>
+      <a class="work w-4 tall" href="modelagem.html"><div class="m"><img src="portfolio/leao-frente.jpg" alt="Mascote leão de jaleco em 3D" loading="lazy"></div><div class="cap"><strong>Mascote Sol Lion</strong><span class="label">Personagem · Marca</span></div></a>
+      <a class="work w-6" href="modelagem.html"><div class="m"><img src="portfolio/cadeira-front.jpg" alt="Cadeira gamer branca e dourada em 3D" loading="lazy"></div><div class="cap"><strong>Cadeira gamer</strong><span class="label">Produto · Asset para Unity</span></div></a>
+      <a class="work w-6" href="modelagem.html"><div class="m"><video src="portfolio/mascara-cores.mp4" poster="portfolio/mascara-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Máscara de raposa mecânica em cinco cores"></video></div><div class="cap"><strong>Máscara de raposa</strong><span class="label">Acessório · 5 variações</span></div></a>
       <a class="work w-4 sq" href="motion.html"><div class="m"><video src="portfolio/logo.mp4" poster="portfolio/logo.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Vinheta de logo"></video></div><div class="cap"><strong>Vinheta de marca</strong><span class="label">Motion · Logo</span></div></a>
-      <a class="work w-4 sq" href="impressao.html"><div class="m"><img src="portfolio/deck-frente.jpg" alt="Deck box decorada impressa em várias cores" loading="lazy"></div><div class="cap"><strong>Deck box personalizada</strong><span class="label">Modelagem · Impressão</span></div></a>
-      <a class="work w-4 sq" href="motion.html"><div class="m"><video src="portfolio/cachorro.mp4" poster="portfolio/cachorro.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Cachorro correndo, animação 2D"></video></div><div class="cap"><strong>Mascote animado</strong><span class="label">Animação 2D</span></div></a>
-      <a class="work w-6" href="motion.html"><div class="m"><video src="portfolio/rolos.mp4" poster="portfolio/rolos.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Rolos girando com texto"></video></div><div class="cap"><strong>Rolos com texto</strong><span class="label">Motion graphics</span></div></a>
-      <a class="work w-6" href="impressao.html"><div class="m"><video src="portfolio/martelo.mp4" poster="portfolio/martelo.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Brinquedo de martelo impresso funcionando"></video></div><div class="cap"><strong>Brinquedo articulado</strong><span class="label">Design · Impressão 3D</span></div></a>
+      <a class="work w-4 sq" href="modelagem.html"><div class="m"><video src="portfolio/cetro-giro.mp4" poster="portfolio/cetro-topo.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Cetro girando em 360 graus"></video></div><div class="cap"><strong>Cetro de cosplay</strong><span class="label">Adereço · Modelagem</span></div></a>
+      <a class="work w-4 sq" href="modelagem.html"><div class="m"><video src="portfolio/radio.mp4" poster="portfolio/radio.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Rádio retrô em 3D"></video></div><div class="cap"><strong>Rádio retrô</strong><span class="label">Produto · Render</span></div></a>
+      <a class="work w-6" href="motion.html"><div class="m"><video src="portfolio/rolos.mp4" poster="portfolio/rolos.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Máquina caça-níquel girando"></video></div><div class="cap"><strong>Máquina caça-níquel</strong><span class="label">Motion graphics 3D</span></div></a>
+      <a class="work w-6" href="impressao.html"><div class="m"><img src="portfolio/deck-frente.jpg" alt="Deck box decorada impressa em várias cores" loading="lazy"></div><div class="cap"><strong>Deck box personalizada</strong><span class="label">Modelagem · Impressão</span></div></a>
     </div>
   </div>
 </section>
@@ -311,8 +331,8 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
     </a>
     <a class="svc" href="modelagem.html">
       <div class="m"><video src="portfolio/radio.mp4" poster="portfolio/radio.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Rádio retrô modelado em 3D"></video></div>
-      <div class="t"><h3>Modelagem e render</h3><p>Modelos 3D a partir de foto, desenho ou medida, com render realista para loja, catálogo e anúncio, ou prontos para imprimir.</p>
-        <ul><li>Modelagem de produto</li><li>Render realista</li><li>Arquivo para impressão</li></ul>
+      <div class="t"><h3>Modelagem e render</h3><p>Mascotes de marca, produtos e acessórios em 3D, com render realista para catálogo e anúncio, prontos para jogos e VRChat ou para imprimir.</p>
+        <ul><li>Mascotes e personagens</li><li>Produtos</li><li>Assets para Unity e VRChat</li><li>Arquivo para impressão</li></ul>
         <div class="go"><span class="price">A partir de R$ 250</span><span class="link">Ver modelagem <span class="arrow">→</span></span></div></div>
     </a>
     <a class="svc" href="impressao.html">

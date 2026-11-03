@@ -182,6 +182,21 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 .steps strong { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; }
 .steps span { color: var(--muted); font-size: .97rem; }
 
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.trio .m { border-radius: 10px; overflow: hidden; aspect-ratio: 13 / 15; background: #fff; min-width: 0; }
+.trio .m > * { width: 100%; height: 100%; object-fit: cover; }
+.strip { border-radius: 10px; overflow: hidden; background: var(--panel); }
+.strip img { width: 100%; }
+.case-wide { padding-block: clamp(2rem, 4vw, 3rem); display: grid; gap: 1.5rem; }
+.case-wide + .case, .case + .case-wide, .case-wide + .case-wide { border-top: 1px solid var(--line); }
+.case-wide .t { display: grid; grid-template-columns: 5fr 7fr; gap: 1rem 3rem; align-items: end; }
+.case-wide .t > div { display: grid; gap: .9rem; }
+.case-wide .t p { color: var(--muted); }
+.case-wide dl { margin: 0; display: grid; gap: .55rem; }
+.case-wide dl div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; padding-top: .55rem; border-top: 1px solid var(--line); font-size: .93rem; }
+.case-wide dt { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); padding-top: .15rem; }
+.case-wide dd { margin: 0; }
+
 /* Contato */
 .contact { border-top: 1px solid var(--line); }
 .contact .wrap { display: grid; grid-template-columns: 7fr 5fr; gap: 3rem; align-items: end; }
@@ -208,13 +223,16 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
   .case.flip .m { order: 0; }
   .steps { grid-template-columns: repeat(2, 1fr); }
   .offers { grid-template-columns: 1fr; }
+  .case-wide .t { grid-template-columns: 1fr; }
 }
 @media (min-width: 601px) and (max-width: 960px) {
   .w-4.sq { grid-column: span 6; }
 }
 @media (max-width: 600px) {
   .pipe { grid-template-columns: 1fr 1fr; }
-  .shop, .duo, .steps { grid-template-columns: 1fr; }
+  .shop, .duo, .steps, .trio { grid-template-columns: 1fr; }
+  .trio .m { aspect-ratio: 4 / 5; }
+  .case-wide dl div { grid-template-columns: 1fr; gap: .1rem; }
   .site-head .wrap { padding-block: .75rem; row-gap: .5rem; }
   .site-nav { flex-wrap: nowrap; overflow-x: auto; width: 100%; gap: 1.1rem; scrollbar-width: none; padding-bottom: .1rem; }
   .site-nav::-webkit-scrollbar { display: none; }

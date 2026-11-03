@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Modelagem e render · André Monteiro Seo</title>
-<meta name="description" content="Modelagem 3D no Blender para render, vídeo e impressão, a partir de R$ 250.">
+<meta name="description" content="Mascotes, produtos e assets em 3D no Blender para render, vídeo, jogos e impressão, a partir de R$ 250.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -182,6 +182,21 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 .steps strong { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; }
 .steps span { color: var(--muted); font-size: .97rem; }
 
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.trio .m { border-radius: 10px; overflow: hidden; aspect-ratio: 13 / 15; background: #fff; min-width: 0; }
+.trio .m > * { width: 100%; height: 100%; object-fit: cover; }
+.strip { border-radius: 10px; overflow: hidden; background: var(--panel); }
+.strip img { width: 100%; }
+.case-wide { padding-block: clamp(2rem, 4vw, 3rem); display: grid; gap: 1.5rem; }
+.case-wide + .case, .case + .case-wide, .case-wide + .case-wide { border-top: 1px solid var(--line); }
+.case-wide .t { display: grid; grid-template-columns: 5fr 7fr; gap: 1rem 3rem; align-items: end; }
+.case-wide .t > div { display: grid; gap: .9rem; }
+.case-wide .t p { color: var(--muted); }
+.case-wide dl { margin: 0; display: grid; gap: .55rem; }
+.case-wide dl div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; padding-top: .55rem; border-top: 1px solid var(--line); font-size: .93rem; }
+.case-wide dt { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); padding-top: .15rem; }
+.case-wide dd { margin: 0; }
+
 /* Contato */
 .contact { border-top: 1px solid var(--line); }
 .contact .wrap { display: grid; grid-template-columns: 7fr 5fr; gap: 3rem; align-items: end; }
@@ -208,13 +223,16 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
   .case.flip .m { order: 0; }
   .steps { grid-template-columns: repeat(2, 1fr); }
   .offers { grid-template-columns: 1fr; }
+  .case-wide .t { grid-template-columns: 1fr; }
 }
 @media (min-width: 601px) and (max-width: 960px) {
   .w-4.sq { grid-column: span 6; }
 }
 @media (max-width: 600px) {
   .pipe { grid-template-columns: 1fr 1fr; }
-  .shop, .duo, .steps { grid-template-columns: 1fr; }
+  .shop, .duo, .steps, .trio { grid-template-columns: 1fr; }
+  .trio .m { aspect-ratio: 4 / 5; }
+  .case-wide dl div { grid-template-columns: 1fr; gap: .1rem; }
   .site-head .wrap { padding-block: .75rem; row-gap: .5rem; }
   .site-nav { flex-wrap: nowrap; overflow-x: auto; width: 100%; gap: 1.1rem; scrollbar-width: none; padding-bottom: .1rem; }
   .site-nav::-webkit-scrollbar { display: none; }
@@ -242,18 +260,38 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 <div class="p-hero">
   <div class="wrap">
     <p class="label"><b>●</b> Modelagem e render</p>
-    <h1>Seu produto em 3D, antes mesmo de existir.</h1>
-    <p class="lede">Modelos feitos no Blender com medidas reais. O mesmo arquivo serve para render de catálogo, vídeo de lançamento e impressão 3D.</p>
-    <div class="facts"><div><span class="label">A partir de</span><strong>R$ 250</strong></div><div><span class="label">Entrega</span><strong>.blend · .stl · .3mf · .png</strong></div><div><span class="label">Ferramenta</span><strong>Blender</strong></div></div>
+    <h1>Personagens, produtos e assets em 3D.</h1>
+    <p class="lede">Modelos feitos no Blender, do mascote da marca ao produto de catálogo. O mesmo arquivo serve para render, vídeo, jogos e impressão 3D.</p>
+    <div class="facts"><div><span class="label">A partir de</span><strong>R$ 250</strong></div><div><span class="label">Entrega</span><strong>.blend · .fbx · .unitypackage · .stl</strong></div><div><span class="label">Ferramentas</span><strong>Blender e Unity</strong></div></div>
   </div>
 </div>
 <section class="flush">
   <div class="wrap">
+    <article class="case-wide">
+      <div class="trio"><div class="m"><img src="portfolio/leao-frente.jpg" alt="Mascote Sol Lion de frente" loading="lazy"></div><div class="m"><img src="portfolio/leao-lado.jpg" alt="Mascote Sol Lion de lado" loading="lazy"></div><div class="m"><img src="portfolio/leao-costas.jpg" alt="Mascote Sol Lion de costas" loading="lazy"></div></div>
+      <div class="t"><div><p class="label">Mascote de marca · Nitto</p><h3>Mascote Sol Lion</h3></div><div><p>Mascote de empresa recriado em 3D: retopologia para animação, texturas novas e esqueleto para poses. O personagem fica pronto para vídeo, redes sociais e material de campanha.</p><dl><div><dt>Etapas</dt><dd>Retopologia, texturas, rig</dd></div><div><dt>Uso</dt><dd>Campanhas, vídeo, redes sociais</dd></div></dl></div></div>
+    </article>
+    <article class="case-wide">
+      <div class="strip"><img src="portfolio/mascara-cores.jpg" alt="Máscara de raposa mecânica em cinco cores" loading="lazy"></div>
+      <div class="t"><div><p class="label">Asset para VRChat · 5 cores</p><h3>Máscara de raposa mecânica</h3></div><div><p>Máscara com peças mecânicas e texturas PBR em cinco versões de cor. Vendida como pacote pronto para avatares do VRChat.</p><dl><div><dt>Etapas</dt><dd>Modelagem, texturas PBR, variações de cor</dd></div><div><dt>Entrega</dt><dd>.fbx e .unitypackage</dd></div></dl></div></div>
+    </article>
+    <article class="case">
+      <div class="m sq"><img src="portfolio/cadeira-front.jpg" alt="Cadeira gamer em 3D" loading="lazy"></div>
+      <div class="t"><p class="label">Assets para Unity</p><h3>Pack de cadeiras</h3><p>Cadeiras gamer, de jantar e escolar com materiais realistas e poucos polígonos, prontas para jogos e mundos virtuais.</p><dl><div><dt>Etapas</dt><dd>Modelagem low-poly, texturas PBR</dd></div><div><dt>Entrega</dt><dd>.fbx e .unitypackage</dd></div></dl></div>
+    </article>
+    <article class="case flip">
+      <div class="m sq"><video src="portfolio/cetro-giro.mp4" poster="portfolio/cetro-topo.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Cetro girando em 360 graus"></video></div>
+      <div class="t"><p class="label">Adereço · Personagem de anime</p><h3>Cetro de cosplay</h3><p>Cetro inspirado em personagem de anime, com ornamentos detalhados. Pode virar render, asset para avatar ou peça impressa para cosplay.</p><dl><div><dt>Etapas</dt><dd>Modelagem, detalhes, render 360°</dd></div><div><dt>Uso</dt><dd>Cosplay, avatar, impressão</dd></div></dl></div>
+    </article>
     <article class="case">
       <div class="m sq"><video src="portfolio/radio.mp4" poster="portfolio/radio.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Rádio retrô"></video></div>
       <div class="t"><p class="label">Produto · Render</p><h3>Rádio retrô</h3><p>Rádio no estilo anos 80 com alto-falantes, botões, antena e fita cassete, em materiais metálicos e plásticos. Mostra o nível de detalhe de um render de produto.</p><dl><div><dt>Etapas</dt><dd>Modelagem, materiais, luz, animação</dd></div><div><dt>Uso</dt><dd>Render de produto, vídeo para redes</dd></div></dl></div>
     </article>
     <article class="case flip">
+      <div class="m"><img src="portfolio/barco.jpg" alt="Barco de papel em 3D" loading="lazy"></div>
+      <div class="t"><p class="label">Low-poly · Animação</p><h3>Barco de papel</h3><p>Barquinho de papel em estilo low-poly, animado navegando por um caminho. Leve e simpático para vinhetas e anúncios.</p><dl><div><dt>Etapas</dt><dd>Modelagem low-poly, animação em caminho</dd></div><div><dt>Uso</dt><dd>Vinhetas, anúncios</dd></div></dl></div>
+    </article>
+    <article class="case">
       <div class="m"><img src="portfolio/deck-frente.jpg" alt="Deck box decorada" loading="lazy"></div>
       <div class="t"><p class="label">Modelagem para impressão</p><h3>Deck box personalizada</h3><p>Caixa para baralho com chifres, correntes e brasão, modelada em partes que encaixam e impressa em várias cores. Saiu do Blender direto para a impressora.</p><dl><div><dt>Etapas</dt><dd>Modelagem, divisão em peças, teste de encaixe</dd></div><div><dt>Uso</dt><dd>Produto físico personalizado</dd></div></dl></div>
     </article>
@@ -269,9 +307,11 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
   <div class="wrap">
     <div class="sec-head"><div><p class="label">O que eu faço</p><h2>Serviços de modelagem</h2></div></div>
     <ul class="offers">
+      <li><strong>Mascotes e personagens 3D</strong><span>O mascote da sua marca em 3D, pronto para posar em vídeos e posts.</span></li>
       <li><strong>Modelagem de peça para imprimir</strong><span>A peça modelada e entregue pronta para a impressora. A partir de R$ 250.</span></li>
-      <li><strong>Modelo a partir de foto ou desenho</strong><span>Você manda a referência, eu transformo em 3D.</span></li>
       <li><strong>Render de produto</strong><span>Imagens realistas para loja virtual, catálogo e anúncios.</span></li>
+      <li><strong>Assets para Unity e VRChat</strong><span>Objetos e acessórios otimizados, com texturas e pacote para Unity.</span></li>
+      <li><strong>Modelo a partir de foto ou desenho</strong><span>Você manda a referência, eu transformo em 3D.</span></li>
       <li><strong>Ajuste de arquivos</strong><span>Correção e adaptação de STL e 3MF que você já tem.</span></li>
     </ul>
   </div>
