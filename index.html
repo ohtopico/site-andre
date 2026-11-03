@@ -154,7 +154,8 @@ section { padding-block: clamp(3rem, 7vw, 5.5rem); }
 .channels { display: grid; gap: 1rem; }
 .channel { display: grid; gap: .1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(238,242,240,.15); }
 .channel .label { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(238,242,240,.55); }
-.channel .value { font-size: 1.2rem; font-weight: 600; user-select: all; }
+.channel .value { font-size: 1.2rem; font-weight: 600; user-select: all; text-decoration: none; }
+.channel a.value:hover { text-decoration: underline; }
 .contact .btn { justify-self: start; background: #3ccf7e; color: #0b1a12; }
 
 .site-foot .wrap { padding-block: 2rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; color: var(--muted); font-size: .9rem; }
@@ -266,8 +267,7 @@ section { padding-block: clamp(3rem, 7vw, 5.5rem); }
     <div class="channels">
       <!-- TODO: número real do WhatsApp (texto e link wa.me) -->
       <div class="channel"><span class="label">WhatsApp</span><span class="value">(51) 9 0000-0000</span></div>
-      <!-- TODO: @ real do Instagram -->
-      <div class="channel"><span class="label">Instagram</span><span class="value">@andreseo.3d</span></div>
+      <div class="channel"><span class="label">Instagram</span><a class="value" href="https://www.instagram.com/seo_andre/" target="_blank" rel="noopener">@seo_andre</a></div>
       <a class="btn" href="https://wa.me/5551900000000?text=Ol%C3%A1%20Andr%C3%A9%2C%20quero%20um%20or%C3%A7amento" target="_blank" rel="noopener">Chamar no WhatsApp</a>
     </div>
   </div>
