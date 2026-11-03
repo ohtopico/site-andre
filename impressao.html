@@ -240,6 +240,38 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
   .reel { min-height: 78vh; }
   .case dl div { grid-template-columns: 1fr; gap: .1rem; }
 }
+
+.menu-btn, .m-cta { display: none; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 760px) {
+  section { padding-block: clamp(3.5rem, 12vw, 4.5rem); }
+  .site-head .wrap { flex-wrap: nowrap; padding-block: .8rem; }
+  .menu-btn { display: grid; place-content: center; gap: 6px; width: 44px; height: 44px; margin-right: -10px; background: none; border: 0; cursor: pointer; }
+  .menu-btn span:not(.sr) { display: block; width: 22px; height: 2px; background: var(--fg); border-radius: 2px; transition: transform .25s; }
+  .menu-open .menu-btn span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+  .menu-open .menu-btn span:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
+  .site-nav { position: absolute; left: 0; right: 0; top: 100%; height: calc(100vh - var(--head-h, 68px)); height: calc(100dvh - var(--head-h, 68px) - env(safe-area-inset-top, 0px)); z-index: 29; flex-direction: column; align-items: stretch; flex-wrap: nowrap; gap: 0; width: auto; overflow: auto; padding: 1rem 24px 2rem; background: var(--bg); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .2s, transform .2s, visibility .2s; }
+  .menu-open .site-nav { opacity: 1; visibility: visible; transform: none; }
+  .menu-open { overflow: hidden; }
+  .menu-open .m-cta { opacity: 0; pointer-events: none; }
+  .site-nav a { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; letter-spacing: -0.02em; color: var(--fg); padding: 1rem 0; border-bottom: 1px solid var(--line); white-space: normal; }
+  .site-nav a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--line); }
+  .site-nav .nav-cta { margin-top: 1.5rem; text-align: center; padding: 1rem; font-size: 1.1rem; border-radius: 999px; }
+  .tools .wrap { flex-wrap: nowrap; overflow-x: auto; gap: 1.6rem; scrollbar-width: none; padding-block: 1.1rem; }
+  .tools .wrap::-webkit-scrollbar { display: none; }
+  .tools span { white-space: nowrap; flex: none; }
+  .p-hero .facts { gap: 1.1rem 2rem; }
+  .trio, .duo { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: .75rem; margin-inline: -24px; padding-inline: 24px; scroll-padding-inline: 24px; scrollbar-width: none; }
+  .trio::-webkit-scrollbar, .duo::-webkit-scrollbar { display: none; }
+  .trio > .m, .duo > .m { flex: 0 0 82%; scroll-snap-align: start; }
+  .strip { overflow-x: auto; scrollbar-width: none; }
+  .strip::-webkit-scrollbar { display: none; }
+  .strip img { width: 250%; max-width: none; }
+  .swipe-hint { display: block; }
+  .m-cta { display: flex; justify-content: center; align-items: center; gap: .5rem; position: fixed; z-index: 25; left: 16px; right: 16px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); padding: .95rem 1.2rem; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-weight: 600; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,.45); transition: opacity .25s, transform .25s; }
+  .m-cta.hide { opacity: 0; transform: translateY(20px); pointer-events: none; }
+  .site-foot { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
+}
 </style>
 </head>
 <body>
@@ -247,7 +279,8 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 <header class="site-head">
   <div class="wrap">
     <a class="logo" href="./"><strong>André Monteiro Seo</strong><span>Artista 3D · Motion</span></a>
-    <nav class="site-nav" aria-label="Páginas">
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu"><span></span><span></span><span class="sr">Menu</span></button>
+    <nav class="site-nav" id="menu" aria-label="Páginas">
       <a href="./#trabalhos">Trabalhos</a>
       <a href="motion.html">Motion e vídeo</a>
       <a href="modelagem.html">Modelagem e render</a>
@@ -323,11 +356,30 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
     </div>
   </div>
 </section>
+<a class="m-cta" href="#contato">Pedir orçamento <span class="arrow">→</span></a>
 <footer class="site-foot">
   <div class="wrap">
     <span>© 2026 André Monteiro Seo · Candelária, RS</span>
     <span>Feito no Blender, impresso em camadas.</span>
   </div>
 </footer>
+<script>
+(function(){
+  var h=document.querySelector('.site-head'), c=document.querySelector('.m-cta'), k=document.getElementById('contato');
+  function sz(){ if(h) document.documentElement.style.setProperty('--head-h', h.offsetHeight+'px'); }
+  sz(); addEventListener('resize', sz);
+  var b=document.querySelector('.menu-btn'), n=document.getElementById('menu');
+  function set(o){ document.body.classList.toggle('menu-open', o); b.setAttribute('aria-expanded', o); }
+  if(b){ b.addEventListener('click', function(){ set(!document.body.classList.contains('menu-open')); });
+    n.addEventListener('click', function(e){ if(e.target.closest('a')) set(false); });
+    addEventListener('keydown', function(e){ if(e.key==='Escape') set(false); }); }
+  var nearC=false;
+  function upd(){ if(c) c.classList.toggle('hide', nearC || scrollY < innerHeight*0.6); }
+  if(c && k && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(e){ nearC=e[0].isIntersecting; upd(); }, {rootMargin:'0px 0px -20% 0px'}).observe(k);
+  }
+  upd(); addEventListener('scroll', upd, {passive:true});
+})();
+</script>
 </body>
 </html>
