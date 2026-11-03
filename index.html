@@ -134,13 +134,16 @@ section { padding-block: 4.5rem; border-top: 1px solid var(--line); }
 .work { margin: 0; display: grid; gap: 0.6rem; min-width: 0; }
 .work.wide { grid-column: span 4; }
 .work.half { grid-column: span 2; }
-.work video { width: 100%; max-width: 100%; display: block; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); object-fit: cover; }
+.work video, .work img { width: 100%; max-width: 100%; display: block; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); object-fit: cover; }
 .work.wide video { aspect-ratio: 16 / 9; }
-.work.half video { aspect-ratio: 16 / 9; }
+.work.half video, .work.half img { aspect-ratio: 16 / 9; }
 .work.square video { aspect-ratio: 1 / 1; }
 .work figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
 .work figcaption strong { font-weight: 600; }
 .work figcaption .mono { color: var(--muted); }
+
+.works-sub { margin: 3rem 0 1.25rem; display: grid; gap: 0.5rem; max-width: 44rem; }
+.works-sub p:not(.eyebrow) { color: var(--muted); }
 
 /* Produtos digitais */
 .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
@@ -302,6 +305,29 @@ footer .wrap { padding-block: 2rem; display: flex; justify-content: space-betwee
         <figure class="work half square">
           <video src="portfolio/logo.mp4" poster="portfolio/logo.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Logo animada"></video>
           <figcaption><strong>Logo animada</strong><span class="mono">animação de marca</span></figcaption>
+        </figure>
+      </div>
+      <div class="works-sub">
+        <p class="eyebrow">Peças impressas</p>
+        <h3>Projetos modelados no Blender e impressos de verdade</h3>
+        <p>Modelos criados pelo André e publicados no MakerWorld, com fotos das peças prontas.</p>
+      </div>
+      <div class="works">
+        <figure class="work half">
+          <video src="portfolio/martelo.mp4" poster="portfolio/martelo.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Brinquedo de martelo funcionando"></video>
+          <figcaption><strong>Brinquedo de martelo</strong><span class="mono">brinquedo articulado</span></figcaption>
+        </figure>
+        <figure class="work half">
+          <img src="portfolio/martelo-trio.jpg" alt="Martelo em três tamanhos" loading="lazy" width="900" height="506">
+          <figcaption><strong>Martelo em três tamanhos</strong><span class="mono">mesmo modelo em três escalas</span></figcaption>
+        </figure>
+        <figure class="work half">
+          <img src="portfolio/bau-frente.jpg" alt="Baú decorado" loading="lazy" width="900" height="506">
+          <figcaption><strong>Baú decorado</strong><span class="mono">impressão multicolor</span></figcaption>
+        </figure>
+        <figure class="work half">
+          <img src="portfolio/bau-aberto.jpg" alt="Baú com tampa articulada" loading="lazy" width="900" height="506">
+          <figcaption><strong>Baú com tampa articulada</strong><span class="mono">compartimento interno</span></figcaption>
         </figure>
       </div>
     </div>
