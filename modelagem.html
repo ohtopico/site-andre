@@ -3,8 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Modelagem e render · André Monteiro Seo</title>
-<meta name="description" content="Mascotes, produtos e assets em 3D no Blender para render, vídeo, jogos e impressão, a partir de R$ 250.">
+<title>Modelagem 3D no Blender e render de produto | Seo3D</title>
+<meta name="description" content="Mascotes, personagens, produtos e assets para Unity e VRChat modelados no Blender. Modelagem de peça para impressão a partir de R$ 250.">
+<link rel="canonical" href="https://andreseo.com.br/modelagem.html">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#131215">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Seo3D · André Monteiro Seo">
+<meta property="og:title" content="Modelagem 3D no Blender e render de produto | Seo3D">
+<meta property="og:description" content="Mascotes, personagens, produtos e assets para Unity e VRChat modelados no Blender. Modelagem de peça para impressão a partir de R$ 250.">
+<meta property="og:url" content="https://andreseo.com.br/modelagem.html">
+<meta property="og:image" content="https://andreseo.com.br/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="geo.region" content="BR-RS">
+<meta name="geo.placename" content="Candelária">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Início", "item": "https://andreseo.com.br/"}, {"@type": "ListItem", "position": 2, "name": "Modelagem e render", "item": "https://andreseo.com.br/modelagem.html"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -274,6 +292,34 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
   .m-cta.hide { opacity: 0; transform: translateY(20px); pointer-events: none; }
   .site-foot { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
 }
+
+/* Blog */
+.posts { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1.5rem, 3vw, 2.5rem); padding-block: clamp(2rem, 4vw, 3rem); }
+.post-card { display: grid; gap: 1.1rem; text-decoration: none; color: inherit; }
+.post-card .m { border-radius: 10px; overflow: hidden; aspect-ratio: 16 / 9; background: var(--panel); }
+.post-card .m img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+.post-card:hover .m img { transform: scale(1.03); }
+.post-card .t { display: grid; gap: .6rem; }
+.post-card .t > p:not(.label) { color: var(--muted); }
+.post-card .more { color: var(--accent); font-weight: 600; font-size: .95rem; }
+.post .wrap { max-width: 46rem; padding-block: clamp(3rem, 7vw, 5rem); display: grid; gap: 1.25rem; }
+.post h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; }
+.crumbs a { color: var(--muted); }
+.post .meta { color: var(--dim); }
+.post .cover { border-radius: 10px; overflow: hidden; aspect-ratio: 16 / 9; background: var(--panel); margin-block: .75rem; }
+.post .cover img { width: 100%; height: 100%; object-fit: cover; }
+.prose { font-size: 1.08rem; line-height: 1.7; color: #d6d3dc; }
+.prose > * + * { margin-top: 1.1rem; }
+.prose h2 { font-size: clamp(1.45rem, 2.6vw, 1.85rem); margin-top: 2.4rem; color: var(--fg); }
+.prose ul, .prose ol { padding-left: 1.3rem; display: grid; gap: .5rem; margin-bottom: 0; }
+.prose strong { color: var(--fg); }
+.prose a, .related a { color: var(--accent); text-underline-offset: 3px; }
+.prose table { width: 100%; border-collapse: collapse; font-size: .98rem; }
+.prose th, .prose td { text-align: left; padding: .7rem .6rem; border-bottom: 1px solid var(--line); }
+.prose th { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); display: grid; gap: .8rem; }
+.related ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .5rem; }
+@media (max-width: 760px) { .posts { grid-template-columns: 1fr; } .prose { font-size: 1.02rem; } .prose table { font-size: .88rem; } }
 </style>
 </head>
 <body>
@@ -287,6 +333,7 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
       <a href="motion.html">Motion e vídeo</a>
       <a href="modelagem.html" aria-current="page">Modelagem e render</a>
       <a href="impressao.html">Impressão 3D</a>
+      <a href="blog.html">Blog</a>
       <a class="nav-cta" href="#contato">Orçamento</a>
     </nav>
   </div>
