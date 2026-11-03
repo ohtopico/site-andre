@@ -129,6 +129,19 @@ section { padding-block: 4.5rem; border-top: 1px solid var(--line); }
 .service .mono { color: var(--blue); border-top: 1px dashed var(--line); padding-top: 0.75rem; }
 .tag { width: max-content; max-width: 100%; }
 
+/* Portfólio */
+.works { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+.work { margin: 0; display: grid; gap: 0.6rem; min-width: 0; }
+.work.wide { grid-column: span 4; }
+.work.half { grid-column: span 2; }
+.work video { width: 100%; max-width: 100%; display: block; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); object-fit: cover; }
+.work.wide video { aspect-ratio: 16 / 9; }
+.work.half video { aspect-ratio: 16 / 9; }
+.work.square video { aspect-ratio: 1 / 1; }
+.work figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
+.work figcaption strong { font-weight: 600; }
+.work figcaption .mono { color: var(--muted); }
+
 /* Produtos digitais */
 .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 .product {
@@ -167,11 +180,15 @@ footer .wrap { padding-block: 2rem; display: flex; justify-content: space-betwee
 @media (max-width: 900px) {
   .hero .wrap, .contact .wrap { grid-template-columns: 1fr; gap: 2rem; }
   .services, .products { grid-template-columns: 1fr; }
+  .works { grid-template-columns: repeat(2, 1fr); }
+  .work.wide, .work.half { grid-column: span 2; }
   .steps { grid-template-columns: repeat(2, 1fr); }
   .print { max-width: 26rem; }
 }
 @media (max-width: 520px) {
   .steps { grid-template-columns: 1fr; }
+  .works { grid-template-columns: 1fr; }
+  .work.wide, .work.half { grid-column: auto; }
   .top nav { gap: 0.9rem; font-size: 0.9rem; }
   section { padding-block: 3.25rem; }
 }
@@ -184,6 +201,7 @@ footer .wrap { padding-block: 2rem; display: flex; justify-content: space-betwee
     <a class="brand" href="#inicio">André Monteiro Seo<span>.3d</span></a>
     <nav aria-label="Seções">
       <a href="#servicos">Serviços</a>
+      <a href="#portfolio">Portfólio</a>
       <a href="#produtos">Produtos digitais</a>
       <a href="#como-funciona">Como funciona</a>
       <a href="#contato">Contato</a>
@@ -200,7 +218,7 @@ footer .wrap { padding-block: 2rem; display: flex; justify-content: space-betwee
         <p class="lead">Impressão 3D personalizada, <strong>modelagem no Blender</strong> e <strong>marketing com imagens 3D</strong> para quem quer tirar um produto do papel ou vender melhor nas redes.</p>
         <div class="ctas">
           <a class="btn btn-primary" href="#contato">Pedir orçamento</a>
-          <a class="btn btn-ghost" href="#produtos">Ver produtos digitais</a>
+          <a class="btn btn-ghost" href="#portfolio">Ver trabalhos</a>
         </div>
       </div>
       <figure class="print" aria-label="Ilustração de uma peça sendo impressa em camadas">
@@ -253,6 +271,38 @@ footer .wrap { padding-block: 2rem; display: flex; justify-content: space-betwee
           </ul>
           <p class="mono">formatos 1080 × 1080 · 1080 × 1920</p>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Portfólio</p>
+        <h2>Trabalhos feitos no Blender</h2>
+        <p>Cenários, produtos e animações criados pelo André. O mesmo cuidado vai para a peça que você encomenda ou para o vídeo do seu produto.</p>
+      </div>
+      <div class="works">
+        <figure class="work wide">
+          <video src="portfolio/cidade.mp4" poster="portfolio/cidade.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Cidade futurista"></video>
+          <figcaption><strong>Cidade futurista</strong><span class="mono">cenário 3D · render animado</span></figcaption>
+        </figure>
+        <figure class="work half">
+          <video src="portfolio/rolos.mp4" poster="portfolio/rolos.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Rolos girando com texto"></video>
+          <figcaption><strong>Rolos girando com texto</strong><span class="mono">motion graphics 3D</span></figcaption>
+        </figure>
+        <figure class="work half">
+          <video src="portfolio/cachorro.mp4" poster="portfolio/cachorro.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Cachorro correndo"></video>
+          <figcaption><strong>Cachorro correndo</strong><span class="mono">animação 2D quadro a quadro</span></figcaption>
+        </figure>
+        <figure class="work half square">
+          <video src="portfolio/radio.mp4" poster="portfolio/radio.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Rádio retrô"></video>
+          <figcaption><strong>Rádio retrô</strong><span class="mono">modelagem de produto</span></figcaption>
+        </figure>
+        <figure class="work half square">
+          <video src="portfolio/logo.mp4" poster="portfolio/logo.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Logo animada"></video>
+          <figcaption><strong>Logo animada</strong><span class="mono">animação de marca</span></figcaption>
+        </figure>
       </div>
     </div>
   </section>
