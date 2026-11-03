@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>André Monteiro Seo 3D</title>
+<meta name="description" content="Impressão 3D personalizada, modelagem no Blender e marketing para negócios de Candelária, Novo Cabrais e região.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112..125,600..800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: placa de impressão. Seções empilhadas como camadas; detalhes técnicos em mono, como numa ficha de fatiador. */
+:root {
+  --bg: #eceff1;          /* placa PEI clara */
+  --surface: #f8f9fa;
+  --fg: #14181d;
+  --muted: #56606b;
+  --line: #cfd5da;
+  --accent: #e2551b;      /* filamento PLA laranja */
+  --accent-ink: #ffffff;
+  --accent-soft: #fbe3d8;
+  --blue: #1f4fd1;        /* cor de seleção do Blender */
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121519; --surface: #1a1f25; --fg: #e9edf1; --muted: #9aa4ae; --line: #2b323a;
+    --accent: #ff7a3d; --accent-ink: #1a0d06; --accent-soft: #3a2116; --blue: #7d9bff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121519; --surface: #1a1f25; --fg: #e9edf1; --muted: #9aa4ae; --line: #2b323a;
+  --accent: #ff7a3d; --accent-ink: #1a0d06; --accent-soft: #3a2116; --blue: #7d9bff;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+
+.wrap {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.mono { font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.02em; }
+.eyebrow {
+  font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--muted); margin: 0;
+}
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+h1 { font-size: clamp(2.2rem, 6vw, 4.2rem); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.6rem, 3.6vw, 2.5rem); font-weight: 750; }
+h3 { font-size: 1.2rem; font-weight: 700; font-stretch: 112%; line-height: 1.2; }
+p { margin: 0; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 1.3rem; border-radius: 999px;
+  font-weight: 600; text-decoration: none; font-size: 1rem;
+  border: 2px solid var(--fg);
+  transition: transform .15s ease, background .15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-ghost { background: transparent; color: var(--fg); }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+
+/* Cabeçalho */
+.top { border-bottom: 1px solid var(--line); }
+.top .wrap {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding-block: 1rem; flex-wrap: wrap;
+}
+.brand { font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: 1.05rem; text-decoration: none; }
+.brand span { color: var(--accent); }
+.top nav { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 0.95rem; }
+.top nav a { text-decoration: none; color: var(--muted); }
+.top nav a:hover { color: var(--fg); }
+
+/* Hero */
+.hero .wrap {
+  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3rem; align-items: center;
+  padding-block: 4rem 3.5rem;
+}
+.hero-copy { display: grid; gap: 1.4rem; min-width: 0; }
+.hero-copy .lead { font-size: 1.2rem; color: var(--muted); max-width: 36rem; }
+.hero-copy .lead strong { color: var(--fg); font-weight: 600; }
+.ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.print {
+  position: relative; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 14px; padding: 1.25rem; display: grid; gap: 0.75rem; min-width: 0;
+}
+.print canvas { width: 100%; max-width: 100%; aspect-ratio: 1 / 1; display: block; }
+.print .specs { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.25rem 1rem; color: var(--muted); }
+
+/* Seções */
+section { padding-block: 4.5rem; border-top: 1px solid var(--line); }
+.section-head { display: grid; gap: 0.75rem; margin-bottom: 2.5rem; max-width: 44rem; }
+.section-head p:not(.eyebrow) { color: var(--muted); }
+
+.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.service {
+  display: grid; grid-template-rows: auto auto 1fr auto; gap: 0.75rem;
+  padding: 1.5rem; background: var(--surface); border-radius: 14px; border: 1px solid var(--line);
+  min-width: 0;
+}
+.service ul { margin: 0; padding-left: 1.1rem; color: var(--muted); display: grid; gap: 0.25rem; }
+.service .mono { color: var(--blue); border-top: 1px dashed var(--line); padding-top: 0.75rem; }
+.tag { width: max-content; max-width: 100%; }
+
+/* Produtos digitais */
+.products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.product {
+  display: grid; grid-template-rows: auto auto 1fr auto; gap: 0.75rem;
+  padding: 1.5rem; border-radius: 14px; border: 2px solid var(--fg); background: var(--bg);
+  min-width: 0;
+}
+.product .kind { color: var(--accent); }
+.product p { color: var(--muted); }
+.product .buy { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 0.5rem; }
+.price { font-family: var(--font-display); font-stretch: 125%; font-weight: 800; font-size: 1.6rem; font-variant-numeric: tabular-nums; }
+.price small { font-size: 0.85rem; font-weight: 600; }
+.note { margin-top: 1.5rem; color: var(--muted); font-size: 0.95rem; }
+
+/* Como funciona */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; gap: 0.5rem; padding-top: 1rem; border-top: 3px solid var(--fg); min-width: 0; }
+.steps li::before { content: "camada " counter(s); font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; }
+.steps p { color: var(--muted); font-size: 0.98rem; }
+
+/* Região e contato */
+.contact { background: var(--fg); color: var(--bg); border-top: 0; }
+.contact .wrap { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: start; }
+.contact .eyebrow { color: color-mix(in srgb, var(--bg) 70%, transparent); }
+.contact .lead { color: color-mix(in srgb, var(--bg) 78%, transparent); max-width: 34rem; margin-top: 1rem; }
+.cities { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; padding: 0; list-style: none; }
+.cities li { border: 1px solid color-mix(in srgb, var(--bg) 35%, transparent); border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.9rem; }
+.channels { display: grid; gap: 1rem; }
+.channel { display: grid; gap: 0.15rem; padding-bottom: 1rem; border-bottom: 1px solid color-mix(in srgb, var(--bg) 22%, transparent); }
+.channel .label { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: color-mix(in srgb, var(--bg) 65%, transparent); }
+.channel .value { font-size: 1.15rem; font-weight: 600; user-select: all; }
+.contact .btn-primary { justify-self: start; }
+
+footer .wrap { padding-block: 2rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; color: var(--muted); font-size: 0.9rem; }
+
+@media (max-width: 900px) {
+  .hero .wrap, .contact .wrap { grid-template-columns: 1fr; gap: 2rem; }
+  .services, .products { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: repeat(2, 1fr); }
+  .print { max-width: 26rem; }
+}
+@media (max-width: 520px) {
+  .steps { grid-template-columns: 1fr; }
+  .top nav { gap: 0.9rem; font-size: 0.9rem; }
+  section { padding-block: 3.25rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio">André Monteiro Seo<span>.3d</span></a>
+    <nav aria-label="Seções">
+      <a href="#servicos">Serviços</a>
+      <a href="#produtos">Produtos digitais</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Candelária · Novo Cabrais · região</p>
+        <h1>Sua ideia, camada por camada.</h1>
+        <p class="lead">Impressão 3D personalizada, <strong>modelagem no Blender</strong> e <strong>marketing com imagens 3D</strong> para quem quer tirar um produto do papel ou vender melhor nas redes.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#contato">Pedir orçamento</a>
+          <a class="btn btn-ghost" href="#produtos">Ver produtos digitais</a>
+        </div>
+      </div>
+      <figure class="print" aria-label="Ilustração de uma peça sendo impressa em camadas">
+        <canvas id="layers" width="600" height="600"></canvas>
+        <figcaption class="specs mono">
+          <span>camada 0,2 mm</span><span>PLA · 210 °C</span><span>preenchimento 15%</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <section id="servicos">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Serviços</p>
+        <h2>Do modelo digital à peça na sua mão</h2>
+        <p>Três frentes que se completam: o que é modelado no Blender pode virar peça impressa e também imagem para divulgar o seu negócio.</p>
+      </div>
+      <div class="services">
+        <article class="service">
+          <p class="eyebrow tag">Impressão 3D</p>
+          <h3>Peças personalizadas</h3>
+          <ul>
+            <li>Chaveiros, brindes e lembranças com nome ou logo</li>
+            <li>Troféus e placas para eventos e escolas</li>
+            <li>Peças de reposição e suportes sob medida</li>
+            <li>Miniaturas e protótipos</li>
+          </ul>
+          <p class="mono">PLA · PETG · área até 22 × 22 cm</p>
+        </article>
+        <article class="service">
+          <p class="eyebrow tag">Blender</p>
+          <h3>Modelagem 3D</h3>
+          <ul>
+            <li>Modelos prontos para imprimir (STL)</li>
+            <li>Modelagem a partir de foto, desenho ou medida</li>
+            <li>Renders realistas de produtos</li>
+            <li>Ajustes em arquivos que você já tem</li>
+          </ul>
+          <p class="mono">entrega em .stl · .obj · .blend · .png</p>
+        </article>
+        <article class="service">
+          <p class="eyebrow tag">Marketing</p>
+          <h3>Imagem que vende</h3>
+          <ul>
+            <li>Artes e posts para Instagram e WhatsApp</li>
+            <li>Vídeos curtos de produto em 3D</li>
+            <li>Mockups para lojas e cardápios</li>
+            <li>Identidade visual para pequenos negócios</li>
+          </ul>
+          <p class="mono">formatos 1080 × 1080 · 1080 × 1920</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="produtos">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Produtos digitais</p>
+        <h2>Compre, baixe e use hoje</h2>
+        <p>Arquivos e materiais feitos pelo André para quem quer imprimir, aprender Blender ou divulgar o próprio negócio. Acesso imediato depois do pagamento.</p>
+      </div>
+      <div class="products">
+        <article class="product">
+          <p class="eyebrow kind">Pacote STL</p>
+          <h3>Kit de chaveiros e brindes</h3>
+          <p>20 modelos prontos para imprimir e personalizar com nome. Testados com camada de 0,2 mm, sem suportes.</p>
+          <div class="buy">
+            <span class="price"><small>R$</small> 29</span>
+            <!-- TODO: trocar "#" pelo link de checkout (Hotmart, Kiwify ou Mercado Pago) -->
+            <a class="btn btn-primary" href="#contato">Comprar</a>
+          </div>
+        </article>
+        <article class="product">
+          <p class="eyebrow kind">Curso em vídeo</p>
+          <h3>Blender para impressão 3D</h3>
+          <p>Do zero ao primeiro modelo impresso: interface, modelagem básica, medidas reais e exportação para o fatiador.</p>
+          <div class="buy">
+            <span class="price"><small>R$</small> 97</span>
+            <!-- TODO: trocar "#" pelo link de checkout -->
+            <a class="btn btn-primary" href="#contato">Comprar</a>
+          </div>
+        </article>
+        <article class="product">
+          <p class="eyebrow kind">Pack de mockups</p>
+          <h3>Mockups 3D para redes sociais</h3>
+          <p>Cenas prontas no Blender para colocar a sua logo ou o seu produto e gerar imagens para posts e stories.</p>
+          <div class="buy">
+            <span class="price"><small>R$</small> 37</span>
+            <!-- TODO: trocar "#" pelo link de checkout -->
+            <a class="btn btn-primary" href="#contato">Comprar</a>
+          </div>
+        </article>
+      </div>
+      <p class="note">Pagamento por Pix ou cartão. Dúvidas antes de comprar? Chama no WhatsApp.</p>
+    </div>
+  </section>
+
+  <section id="como-funciona">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Como funciona</p>
+        <h2>Encomenda sob medida em quatro etapas</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Você manda a ideia</h3><p>Uma foto, um desenho ou só a descrição pelo WhatsApp, com tamanho e quantidade.</p></li>
+        <li><h3>Modelo e orçamento</h3><p>O André modela no Blender e envia uma prévia em imagem com o preço e o prazo.</p></li>
+        <li><h3>Impressão</h3><p>Com a prévia aprovada, a peça é impressa na cor e no material escolhidos.</p></li>
+        <li><h3>Retirada ou entrega</h3><p>Retire em Candelária ou receba em Novo Cabrais e cidades vizinhas.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contato" class="contact">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Contato</p>
+        <h2>Vamos imprimir sua ideia?</h2>
+        <p class="lead">Atendimento para pessoas, escolas e empresas da região. Orçamento sem compromisso, normalmente respondido no mesmo dia.</p>
+        <ul class="cities" aria-label="Cidades atendidas">
+          <li>Candelária</li><li>Novo Cabrais</li><li>Cidades vizinhas</li><li>Arquivos digitais para todo o Brasil</li>
+        </ul>
+      </div>
+      <div class="channels">
+        <!-- TODO: colocar o número real em wa.me/55DDDNUMERO e no texto abaixo -->
+        <div class="channel"><span class="label">WhatsApp</span><span class="value">(51) 9 0000-0000</span></div>
+        <!-- TODO: colocar o @ real do Instagram -->
+        <div class="channel"><span class="label">Instagram</span><span class="value">@andremonteiroseo.3d</span></div>
+        <a class="btn btn-primary" href="https://wa.me/5551900000000?text=Ol%C3%A1%20Andr%C3%A9%2C%20quero%20um%20or%C3%A7amento" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 André Monteiro Seo · Candelária, RS</span>
+    <span class="mono">feito em camadas de 0,2 mm</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var c = document.getElementById('layers');
+  if (!c || !c.getContext) return;
+  var ctx = c.getContext('2d');
+  function draw() {
+    var cs = getComputedStyle(document.documentElement);
+    var accent = cs.getPropertyValue('--accent').trim() || '#e2551b';
+    var line = cs.getPropertyValue('--line').trim() || '#cfd5da';
+    var muted = cs.getPropertyValue('--muted').trim() || '#56606b';
+    var W = c.width, H = c.height;
+    ctx.clearRect(0, 0, W, H);
+    // placa de impressão
+    var plateY = H - 70;
+    ctx.fillStyle = line;
+    ctx.fillRect(40, plateY, W - 80, 14);
+    // vaso em camadas: perfil de raio por altura
+    var layers = 62, lh = 7, cx = W / 2;
+    for (var i = 0; i < layers; i++) {
+      var t = i / (layers - 1);
+      var r = 95 + 70 * Math.sin(t * Math.PI * 1.1 + 0.3) - 40 * t + 18 * Math.sin(t * 14) * 0.25;
+      var y = plateY - (i + 1) * lh;
+      ctx.fillStyle = accent;
+      ctx.globalAlpha = 0.55 + 0.45 * (i % 2);
+      ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(cx - r, y, r * 2, lh - 1.5, 3) : ctx.rect(cx - r, y, r * 2, lh - 1.5);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    // bico da impressora sobre a última camada
+    var topY = plateY - layers * lh;
+    ctx.fillStyle = muted;
+    ctx.fillRect(cx + 40, topY - 64, 46, 34);
+    ctx.beginPath();
+    ctx.moveTo(cx + 50, topY - 30); ctx.lineTo(cx + 76, topY - 30); ctx.lineTo(cx + 63, topY - 10);
+    ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = muted; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(40, topY - 47); ctx.lineTo(W - 40, topY - 47); ctx.stroke();
+  }
+  draw();
+  if (window.matchMedia) {
+    var mq = matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener && mq.addEventListener('change', draw);
+  }
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+</body>
+</html>
