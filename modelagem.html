@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Modelagem 3D · André Seo</title>
+<meta name="description" content="Modelagem 3D no Blender para render, vídeo e impressão.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: galeria escura de grafite, o trabalho em primeiro plano; verde de filamento como única cor de destaque. */
+:root {
+  --bg: #e7eae8;
+  --surface: #f5f6f5;
+  --raised: #ffffff;
+  --fg: #1b201e;
+  --muted: #5b6561;
+  --line: #cfd5d2;
+  --green: #12804a;
+  --green-strong: #0b6a3c;
+  --on-green: #ffffff;
+  --green-tint: #d8eee1;
+  --stage: #202425;         /* fundo das mídias, sempre escuro */
+  --font-display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171a1b; --surface: #1f2324; --raised: #262b2c; --fg: #ecefed; --muted: #a0aaa5;
+    --line: #333a3a; --green: #3ccf7e; --green-strong: #5fe096; --on-green: #0b1a12; --green-tint: #183526;
+    --stage: #101213; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171a1b; --surface: #1f2324; --raised: #262b2c; --fg: #ecefed; --muted: #a0aaa5;
+  --line: #333a3a; --green: #3ccf7e; --green-strong: #5fe096; --on-green: #0b1a12; --green-tint: #183526;
+  --stage: #101213; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.6; }
+img, video { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+.wrap { max-width: 76rem; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; line-height: 1.02; text-wrap: balance; letter-spacing: -0.02em; }
+h1 { font-size: clamp(2.6rem, 7vw, 5.4rem); font-weight: 700; }
+h2 { font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 700; }
+h3 { font-size: 1.3rem; font-weight: 650; letter-spacing: -0.01em; line-height: 1.2; }
+p { margin: 0; }
+.kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin: 0; }
+.lede { font-size: 1.2rem; color: var(--muted); max-width: 40rem; }
+
+.btn { display: inline-flex; align-items: center; gap: .5rem; padding: .85rem 1.35rem; border-radius: 10px; font-weight: 600; text-decoration: none; border: 1.5px solid transparent; transition: background .15s, transform .15s; }
+.btn:hover { transform: translateY(-1px); }
+.btn-green { background: var(--green); color: var(--on-green); }
+.btn-green:hover { background: var(--green-strong); }
+.btn-line { border-color: currentColor; }
+
+/* Cabeçalho */
+.site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: var(--bg); }
+.site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: .75rem 1.5rem; padding-block: .85rem; flex-wrap: wrap; }
+.logo { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; }
+.logo-mark { width: 28px; height: 28px; border-radius: 7px; background: var(--green); display: grid; place-items: center; }
+.logo-mark svg { width: 16px; height: 16px; }
+.site-nav { display: flex; gap: .25rem; flex-wrap: wrap; }
+.site-nav a { text-decoration: none; color: var(--muted); padding: .4rem .7rem; border-radius: 8px; font-size: .95rem; font-weight: 500; }
+.site-nav a:hover { color: var(--fg); background: var(--surface); }
+.site-nav a[aria-current="page"] { color: var(--fg); background: var(--green-tint); }
+
+/* Hero da página inicial: vídeo do trabalho em tela cheia */
+.hero { position: relative; isolation: isolate; color: #f2f5f3; background: #101213; overflow: hidden; }
+.hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(16,18,19,.92) 0%, rgba(16,18,19,.7) 45%, rgba(16,18,19,.15) 100%); }
+.hero .wrap { padding-block: clamp(4rem, 12vw, 9rem); display: grid; gap: 1.5rem; }
+.hero h1 { max-width: 12ch; }
+.hero .lede { color: rgba(242,245,243,.82); }
+.hero .kicker { color: #6fe3a3; }
+.hero .btn-line { color: #f2f5f3; }
+.ctas { display: flex; flex-wrap: wrap; gap: .75rem; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-family: var(--font-mono); font-size: .8rem; color: rgba(242,245,243,.6); padding-top: 1rem; }
+
+/* Cabeçalho das páginas internas */
+.page-head .wrap { padding-block: clamp(3rem, 8vw, 5.5rem) 2.5rem; display: grid; gap: 1.1rem; }
+
+section { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.sec-head { display: grid; gap: .8rem; margin-bottom: 2.25rem; max-width: 46rem; }
+.sec-head p:not(.kicker) { color: var(--muted); }
+.band { background: var(--surface); border-block: 1px solid var(--line); }
+
+/* Três áreas */
+.areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.area { display: grid; grid-template-rows: auto 1fr; background: var(--raised); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; text-decoration: none; transition: transform .2s, border-color .2s; min-width: 0; }
+.area:hover { transform: translateY(-3px); border-color: var(--green); }
+.area .media { aspect-ratio: 4 / 3; background: var(--stage); }
+.area .media > * { width: 100%; height: 100%; object-fit: cover; }
+.area .body { padding: 1.25rem 1.35rem 1.4rem; display: grid; gap: .5rem; align-content: start; }
+.area .body p { color: var(--muted); }
+.area .go { color: var(--green); font-weight: 600; margin-top: .35rem; }
+
+/* Galerias */
+.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.25rem; }
+.tile { margin: 0; display: grid; gap: .6rem; grid-column: span 3; min-width: 0; }
+.tile.full { grid-column: span 6; }
+.tile.third { grid-column: span 2; }
+.tile .media { background: var(--stage); border-radius: 14px; overflow: hidden; aspect-ratio: 16 / 9; }
+.tile.square .media { aspect-ratio: 1 / 1; }
+.tile.tall .media { aspect-ratio: 4 / 3; }
+.tile .media > * { width: 100%; height: 100%; object-fit: cover; }
+.tile .media.contain > * { object-fit: contain; }
+.tile figcaption { display: flex; justify-content: space-between; align-items: baseline; gap: .25rem 1rem; flex-wrap: wrap; }
+.tile figcaption strong { font-weight: 600; }
+.tile figcaption span { color: var(--muted); font-size: .9rem; }
+
+/* Listas de serviço */
+.offers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; list-style: none; padding: 0; margin: 0; }
+.offers.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.offers li { background: var(--raised); border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem 1.25rem; display: grid; gap: .35rem; }
+.offers li strong { font-family: var(--font-display); font-size: 1.1rem; font-weight: 650; }
+.offers li span { color: var(--muted); font-size: .97rem; }
+
+.facts { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; padding: 0; list-style: none; }
+.facts li { font-family: var(--font-mono); font-size: .8rem; padding: .35rem .7rem; border-radius: 999px; background: var(--green-tint); color: var(--fg); }
+
+/* Passos */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; gap: .45rem; align-content: start; }
+.steps li::before { content: counter(s); width: 2.2rem; height: 2.2rem; border-radius: 50%; display: grid; place-items: center; background: var(--green); color: var(--on-green); font-family: var(--font-display); font-weight: 700; }
+.steps p { color: var(--muted); font-size: .98rem; }
+
+/* Produtos digitais */
+.products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.product { display: grid; grid-template-rows: auto auto 1fr auto; gap: .65rem; background: var(--raised); border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem; min-width: 0; }
+.product .kicker { color: var(--muted); }
+.product p { color: var(--muted); }
+.product .buy { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: .9rem; border-top: 1px solid var(--line); }
+.price { font-family: var(--font-display); font-weight: 700; font-size: 1.8rem; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.price small { font-size: .9rem; font-weight: 600; margin-right: .15rem; color: var(--muted); }
+.price-ask { font-size: 1.25rem; }
+.note { margin-top: 1.25rem; color: var(--muted); font-size: .95rem; }
+
+/* Contato */
+.contact { background: var(--stage); color: #eef2f0; }
+.contact .wrap { display: grid; grid-template-columns: 1.2fr .8fr; gap: 3rem; align-items: start; }
+.contact .kicker { color: #6fe3a3; }
+.contact p.lede { color: rgba(238,242,240,.75); margin-top: 1rem; }
+.cities { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; padding: 0; list-style: none; }
+.cities li { border: 1px solid rgba(238,242,240,.25); border-radius: 999px; padding: .3rem .85rem; font-size: .9rem; }
+.channels { display: grid; gap: 1rem; }
+.channel { display: grid; gap: .1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(238,242,240,.15); }
+.channel .label { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(238,242,240,.55); }
+.channel .value { font-size: 1.2rem; font-weight: 600; user-select: all; }
+.contact .btn { justify-self: start; background: #3ccf7e; color: #0b1a12; }
+
+.site-foot .wrap { padding-block: 2rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; color: var(--muted); font-size: .9rem; }
+
+@media (max-width: 900px) {
+  .areas, .products { grid-template-columns: 1fr; }
+  .area { grid-template-columns: 1fr; }
+  .steps, .offers, .offers.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .contact .wrap { grid-template-columns: 1fr; gap: 2rem; }
+  .tile.third { grid-column: span 3; }
+}
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .tile, .tile.full, .tile.third { grid-column: auto; }
+  .steps, .offers, .offers.cols-3 { grid-template-columns: 1fr; }
+  .hero::after { background: linear-gradient(180deg, rgba(16,18,19,.55) 0%, rgba(16,18,19,.9) 100%); }
+  .site-nav a { padding: .35rem .55rem; font-size: .9rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="./"><span class="logo-mark"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 14 5v6l-6 3.5L2 11V5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" style="color:var(--on-green)"/><path d="M2 5l6 3.5L14 5M8 8.5v6" fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--on-green)"/></svg></span>André Seo</a>
+    <nav class="site-nav" aria-label="Páginas">
+      <a href="./">Início</a>
+      <a href="animacao.html">Vídeos e animações</a>
+      <a href="modelagem.html" aria-current="page">Modelagem 3D</a>
+      <a href="impressao.html">Impressão 3D</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <p class="kicker">Modelagem 3D</p>
+    <h1>Modelos que funcionam no render e na impressora</h1>
+    <p class="lede">Tudo é modelado no Blender com medidas reais, então o mesmo arquivo serve para imagem, vídeo ou peça impressa.</p>
+  </div>
+</div>
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="grid">
+      <figure class="tile ">
+        <div class="media"><video src="portfolio/radio.mp4" poster="portfolio/radio.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Rádio retrô"></video></div>
+        <figcaption><strong>Rádio retrô</strong><span>modelagem e render de produto</span></figcaption>
+      </figure>
+      <figure class="tile ">
+        <div class="media"><img src="portfolio/bau-frente.jpg" alt="Baú decorado impresso a partir do modelo" loading="lazy"></div>
+        <figcaption><strong>Deck box decorada</strong><span>do Blender para a impressão multicolor</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Publicados no MakerWorld</p>
+      <h2>Modelos prontos para imprimir</h2>
+      <p>Alguns projetos que o André modelou e publicou para a comunidade de impressão 3D.</p>
+    </div>
+    <div class="grid">
+      <figure class="tile third square">
+        <div class="media contain"><img src="portfolio/modelos/martelo.png" alt="Brinquedo de martelo no fatiador" loading="lazy"></div>
+        <figcaption><strong>Brinquedo de martelo</strong><span>peças articuladas</span></figcaption>
+      </figure>
+      <figure class="tile third square">
+        <div class="media contain"><img src="portfolio/modelos/caixa.png" alt="Caixas dobráveis no fatiador" loading="lazy"></div>
+        <figcaption><strong>Caixas para farmácia</strong><span>8 por mesa · PETG</span></figcaption>
+      </figure>
+      <figure class="tile third square">
+        <div class="media contain"><img src="portfolio/modelos/alpaca.png" alt="Peças do chaveiro de alpaca" loading="lazy"></div>
+        <figcaption><strong>Chaveiro de alpaca</strong><span>montagem com mola</span></figcaption>
+      </figure>
+      <figure class="tile third square">
+        <div class="media contain"><img src="portfolio/modelos/prendedor.png" alt="Prendedor de roupa no fatiador" loading="lazy"></div>
+        <figcaption><strong>Prendedor de roupa</strong><span>mola impressa</span></figcaption>
+      </figure>
+      <figure class="tile third square">
+        <div class="media contain"><img src="portfolio/modelos/leque.png" alt="Leque no fatiador" loading="lazy"></div>
+        <figcaption><strong>Leque</strong><span>peça única</span></figcaption>
+      </figure>
+      <figure class="tile third square">
+        <div class="media"><img src="portfolio/bau-aberto.jpg" alt="Baú aberto mostrando o compartimento" loading="lazy"></div>
+        <figcaption><strong>Deck box por dentro</strong><span>espaço para as cartas</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="sec-head"><p class="kicker">Serviços</p><h2>Como posso ajudar</h2></div>
+    <ul class="offers">
+      <li><strong>Modelo a partir de foto ou desenho</strong><span>Você manda a referência, eu transformo em 3D.</span></li>
+      <li><strong>Peça sob medida</strong><span>Suportes, encaixes e reposições com as medidas que você precisa.</span></li>
+      <li><strong>Render de produto</strong><span>Imagens realistas para loja virtual, catálogo e redes.</span></li>
+      <li><strong>Ajuste de arquivos</strong><span>Correção e adaptação de STL e 3MF que você já tem.</span></li>
+    </ul>
+    <ul class="facts" aria-label="Formatos de entrega"><li>.blend</li><li>.stl</li><li>.3mf</li><li>.obj</li><li>.png</li><li>.mp4</li></ul>
+  </div>
+</section>
+</main>
+<section id="contato" class="contact">
+  <div class="wrap">
+    <div>
+      <p class="kicker">Contato</p>
+      <h2>Vamos tirar sua ideia do papel?</h2>
+      <p class="lede">Orçamento sem compromisso para pessoas, escolas e empresas. Arquivos digitais e animações para todo o Brasil.</p>
+      <ul class="cities" aria-label="Onde atende">
+        <li>Candelária</li><li>Novo Cabrais</li><li>Cidades vizinhas</li><li>Online para todo o Brasil</li>
+      </ul>
+    </div>
+    <div class="channels">
+      <!-- TODO: número real do WhatsApp (texto e link wa.me) -->
+      <div class="channel"><span class="label">WhatsApp</span><span class="value">(51) 9 0000-0000</span></div>
+      <!-- TODO: @ real do Instagram -->
+      <div class="channel"><span class="label">Instagram</span><span class="value">@andreseo.3d</span></div>
+      <a class="btn" href="https://wa.me/5551900000000?text=Ol%C3%A1%20Andr%C3%A9%2C%20quero%20um%20or%C3%A7amento" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+<footer class="site-foot">
+  <div class="wrap">
+    <span>© 2026 André Monteiro Seo · Candelária, RS</span>
+    <span>andreseo.com.br</span>
+  </div>
+</footer>
+</body>
+</html>
