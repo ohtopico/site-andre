@@ -24,4 +24,4 @@ A propagação leva de minutos até algumas horas. O certificado HTTPS do GitHub
 - Número real do WhatsApp (texto e link `wa.me`).
 - @ real do Instagram.
 - Links de checkout dos produtos digitais (Hotmart, Kiwify ou Mercado Pago).
-- Preços confirmados: mockups R$100, curso Blender R$250, kit de chaveiros sob consulta.
+- Preços confirmados: mockups R$100, modelagem de peça para imprimir a partir de R$250, kit de chaveiros sob consulta.
