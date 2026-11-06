@@ -11,7 +11,7 @@
   gtag('js', new Date());
   gtag('config', 'G-5WME15D9P2');
 </script>
-<title>Impressão 3D em Candelária: o que dá para fazer e como pedir | Seo3D</title>
+<title>Impressão 3D em Candelária: o que dá para fazer e como pedir</title>
 <meta name="description" content="Guia de impressão 3D em Candelária, Novo Cabrais e região: o que dá para imprimir, materiais, prazos e como pedir um orçamento.">
 <link rel="canonical" href="https://andreseo.com.br/blog-impressao-3d-em-candelaria.html">
 <meta name="robots" content="index, follow">
@@ -21,10 +21,11 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Seo3D · André Monteiro Seo">
-<meta property="og:title" content="Impressão 3D em Candelária: o que dá para fazer e como pedir | Seo3D">
+<meta property="og:title" content="Impressão 3D em Candelária: o que dá para fazer e como pedir">
 <meta property="og:description" content="Guia de impressão 3D em Candelária, Novo Cabrais e região: o que dá para imprimir, materiais, prazos e como pedir um orçamento.">
 <meta property="og:url" content="https://andreseo.com.br/blog-impressao-3d-em-candelaria.html">
-<meta property="og:image" content="https://andreseo.com.br/portfolio/deck-frente.jpg">
+<meta property="og:image" content="https://andreseo.com.br/og/blog-impressao-3d-em-candelaria.jpg">
+<meta property="og:image:alt" content="Impressão 3D em Candelária: o que dá para fazer e como pedir">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -56,6 +57,7 @@
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 img, video { max-width: 100%; display: block; }
+img { height: auto; }
 a { color: inherit; }
 ::selection { background: var(--accent); color: var(--on-accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
@@ -177,6 +179,9 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 /* Páginas internas */
 .p-hero .wrap { padding-block: clamp(4rem, 9vw, 7rem) clamp(2.5rem, 5vw, 4rem); display: grid; gap: 1.5rem; }
 .p-hero h1 { max-width: 16ch; }
+.p-hero h1 em { font-style: normal; color: var(--accent); }
+.blog-links { margin-top: 0; }
+.e404 .links { display: flex; flex-wrap: wrap; gap: .8rem; }
 .p-hero .facts { display: flex; flex-wrap: wrap; gap: 1rem 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); margin-top: 1rem; }
 .p-hero .facts div { display: grid; gap: .25rem; }
 .p-hero .facts strong { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; }
@@ -357,7 +362,7 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
     <h1>Impressão 3D em Candelária: o que dá para fazer e como pedir</h1>
     <p class="lede">Guia de impressão 3D em Candelária, Novo Cabrais e região: o que dá para imprimir, materiais, prazos e como pedir um orçamento.</p>
     <p class="label meta">André Monteiro Seo · <time datetime="2026-11-03">3 de novembro de 2026</time></p>
-    <div class="cover"><img src="portfolio/deck-frente.jpg" alt="Deck box personalizada impressa em 3D em várias cores" loading="lazy"></div>
+    <div class="cover"><img src="portfolio/deck-frente.jpg" alt="Deck box personalizada impressa em 3D em várias cores" width="1600" height="900" loading="lazy" decoding="async"></div>
     <div class="prose">
 <p>Impressão 3D já não é coisa só de cidade grande. Em Candelária dá para transformar uma ideia, uma foto ou um desenho em uma peça de verdade, feita sob medida e sem precisar de molde nem de quantidade mínima.</p>
 <h2>O que dá para imprimir</h2>
@@ -424,6 +429,12 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
     new IntersectionObserver(function(e){ nearC=e[0].isIntersecting; upd(); }, {rootMargin:'0px 0px -20% 0px'}).observe(k);
   }
   upd(); addEventListener('scroll', upd, {passive:true});
+  var vs=[].slice.call(document.querySelectorAll('video[data-src]'));
+  function go(v){ if(!v.dataset.src) return; v.src=v.dataset.src; v.removeAttribute('data-src'); v.autoplay=true; var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ go(e.target); io.unobserve(e.target); } }); }, {rootMargin:'300px 0px'});
+    vs.forEach(function(v){ io.observe(v); });
+  } else vs.forEach(go);
 })();
 </script>
 </body>
